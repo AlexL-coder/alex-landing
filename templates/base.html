@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html>
+  <head>
+        {% if title %}
+              <title>{{ title }} - Myblog</title>
+        {% else %}
+              <title>Myblog</title>
+        {% endif %}
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel= "stylesheet" type= "text/css" href= "{{ url_for('static',filename='menu.css') }}">
+    <link rel= "stylesheet" type= "text/css" href= "{{ url_for('static',filename='header.css') }}">
+    <link rel= "stylesheet" type= "text/css" href= "{{ url_for('static',filename='main.css') }}">
+    <link rel= "stylesheet" type= "text/css" href= "{{ url_for('static',filename='footer.css') }}">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script type="text/javascript" src="/js/simplemde/dist/simplemde.min.js"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/latest/css/font-awesome.min.css">
+    <link rel="stylesheet" href="/js/simplemde/dist/simplemde.min.css">
+    {{ moment.include_jquery() }}
+    {{ moment.include_moment() }}
+    <style>
+    .b_img2  {
+              top: 0;
+              background-image: url('/static/brick-wall-bricks-brickwork-1101125.jpg');
+              background-position: center;
+              background-repeat: no-repeat;
+              background-size: cover;
+              position: relative;
+}
+        .b_img2  p {
+            height: 210px;
+            margin : 0;
+        }
+        @media only screen and (max-width: 380px) {
+             .b_img2  p {
+
+                height: 100px;
+             }
+             .sidenav a {
+                font-size: 10px;
+             }
+
+        }
+    </style>
+  </head>
+  <body>
+      <div class="b_img2">
+            <p></p>
+     </div>
+
+   <div id="mySidenav" class="sidenav" >
+                            {% if current_user.is_anonymous %}
+                                    <a href="{{ url_for('category_search', categoryname="Contact") }}">Contact</a>
+		                            <a href="{{ url_for('category_search', categoryname="About") }}">About</a>
+		                            <a href="{{ url_for('homePage') }}">Home</a>
+		                    {% else %}
+                                    <a href="{{ url_for('index') }}">Home</a>
+                                    <a href="{{ url_for('logout') }}">Logout</a>
+                                    <a href="{{ url_for('user', username=current_user.username) }}">Profile</a>
+                                    <a href="{{ url_for('startNews') }}">News</a>
+                                    <a href="{{ url_for('explore') }}">Explore</a>
+                            {% endif %}
+
+   </div>
+
+
+                    <div id="header-right" class="header-right">
+                                <div class="left">
+                                                  <a href="{{ url_for('category_search', categoryname="Network") }}">Network</a>
+                                                  <a href="{{ url_for('category_search', categoryname="Windows") }}">Windows</a>
+                                                  <a href="{{ url_for('category_search', categoryname="Linux") }}">Linux</a>
+                                                  <a href="{{ url_for('category_search', categoryname="Python") }}">Python</a>
+                                                  <a href="{{ url_for('category_search', categoryname="PowerShell") }}">PowerShell</a>
+                                                  <a href="{{ url_for('category_search', categoryname="Batch") }}">Batch</a>
+                                </div>
+                                <div class="right">
+                                                {% if current_user.is_anonymous %}
+                                                     <a href="{{ url_for('login') }}">Login</a>
+                                                      {% else %}
+                                                     <a href="{{ url_for('logout') }}">Logout</a>
+                                                {% endif %}
+
+                                </div>
+
+                    </div>
+
+                    <div id="main" class="menu">
+                        <div id="header" class="header">
+                                            <a id="xmenu" href="#" onclick="openClose()" class="logo">&#9776; </a>
+                            </div>
+                    </div>
+
+                    <div id ="main_content" class="main_content">
+                                    <div class="index">
+                                         {% block index %}{% endblock %}
+                                    </div>
+                                      <div id="left_content" class="left_content">
+
+                                      </div>
+
+                                     <div id="app_content" class="app_content">
+                                                      {% block app_content %}{% endblock %}
+                                                      {% block user %}{% endblock %}
+                                                      {% block edit_profile%}{% endblock %}
+                                                      {% block resentBlogs %}{% endblock %}
+                                                      {% block error404%}{% endblock %}
+                                                      {% block error500%}{% endblock %}
+                                                      {% block reset_password_request%}{% endblock %}
+                                                      {% block reset_password%}{% endblock %}
+                                                      {% if current_user.is_anonymous %}
+                                                            <div id="login" class="login">
+                                                                    {% block login %}{% endblock %}
+                                                            </div>
+                                                      {% endif %}
+                                                  <div id="wall" class="wall">
+                                                              <form style="display: inline;" action="{{ url_for('search') }}" method="post" name="search"><input type="submit" value="Search"></form>
+                                                              {% block news %}{% endblock %}
+
+                                                   </div>
+                                                 <div id="flash">
+                                                        {% with messages = get_flashed_messages() %}
+                                                                {% if messages %}
+                                                                <ul>
+                                                                    {% for message in messages %}
+                                                                    <li>{{ message }}</li>
+                                                                    {% endfor %}
+                                                                </ul>
+                                                        {% endif %}
+                                                        {% endwith %}
+                                                  </div>
+                                     </div>
+                                      <div  id="right_content" class="right_content">
+
+                                      </div>
+
+                    </div>
+<footer class="footer">
+    <div class="social-area">
+        <ul>
+            <li> <a href="https://www.facebook.com" target="_blank" title="Join me on Facebook" class="shr-btn-instagram">
+            <img border="0" alt="facebook" src="{{url_for('static', filename='facebook_logo.png')}}" width="40" height="30" </a>
+            </li>
+            <li> <a href="http://instagram.com" target="_blank" title="Join me on Instagram" class="shr-btn-instagram">
+            <img border="0" alt="instagram" src="{{url_for('static', filename='Instagram-Button.png')}}" width="30" height="30">  </a>
+            </li>
+            <li> <a href="http://linkedin.com" target="_blank" title="Join me on LinkedIn" class="shr-btn-instagram">
+            <img border="0" alt="LinkedIn" src="{{url_for('static', filename='LinkedIn_logo.png')}}" width="30" height="30">  </a>
+            </li>
+        </ul>
+     </div>
+    <div class="credits">
+        <p>©2018 <span class="footer-white">Alex Lukyanov Web</span></p>
+    </div>
+</footer>
+
+
+</body>
+</html>
+
+<script>
+
+window.onscroll = function() {myFunction()};
+
+var navbar = document.getElementById("main");
+var sticky = navbar.offsetTop;
+
+function myFunction() {
+  if (window.pageYOffset >= sticky) {
+    navbar.classList.add("sticky")
+  } else {
+    navbar.classList.remove("sticky");
+
+  }
+}
+
+
+var is_open = 0;
+function openClose(){
+    if (is_open == 0) {
+        document.getElementById("xmenu").innerHTML ='&#10540';
+        document.getElementById("xmenu").style.fontSize = "34px";
+
+        openNav();
+    } else {
+        closeNav();
+        document.getElementById("xmenu").innerHTML ='&#9776';
+        document.getElementById("xmenu").style.fontSize = "34px";
+    }
+}
+
+
+var ov = 0;
+function  color(x){
+   if (ov == 0) {
+   x.style.backgroundColor = "#ffffa0";
+   ov = 1;
+   } else {
+     x.style.backgroundColor = "#111";
+     ov = 0;
+   }
+}
+function openNav() {
+    is_open = 1;
+    document.getElementById("mySidenav").style.width = "130px";
+    document.getElementById("main").style.marginLeft = "130px";
+    document.getElementById("header-right").style.marginRight = "130px";
+	/*document.body.style.backgroundColor = "rgba(0,0,0,0.4)";*/
+	document.getElementById("header-right").style.pointerEvents = "none";
+	document.getElementById("header-right").style.opacity = "0.3";
+	document.getElementById("header-right").style.zIndex = "0";
+/*	document.getElementById("login").style.pointerEvents = "none";
+	document.getElementById("login").style.opacity = "0";*/
+}
+
+function closeNav() {
+    is_open = 0;
+    document.getElementById("mySidenav").style.width = "0";
+    document.getElementById("main").style.marginLeft= "0";
+    document.getElementById("header-right").style.marginRight = "0";
+	/*
+	document.body.style.backgroundColor = "#FBFCFC";
+	*/
+	document.getElementById("header-right").style.pointerEvents = "auto";
+	document.getElementById("header-right").style.opacity = "1";
+	document.getElementById("header-right").style.zIndex = "2";
+	document.getElementById("login").style.pointerEvents = "auto";
+	document.getElementById("login").style.opacity = "1";
+}
+</script>
+  </body>
+</html>

@@ -1,0 +1,67 @@
+{% extends 'bootstrap/base.html' %}
+{% import 'bootstrap/wtf.html' as wtf %}
+    {% block title %}
+            {% if title %}
+              <title>{{ title }} - Myblog</title>
+            {% else %}
+              <title>Myblog</title>
+            {% endif %}
+    {% endblock %}
+
+    {% block navbar %}
+        <nav class="navbar navbar-default">
+            <div>Microblog:
+                    <a href="{{ url_for('index') }}">Home</a>
+                    {% if current_user.is_anonymous %}
+                             <a href="{{ url_for('login') }}">Login</a>
+                    {% else %}
+                            <a href="{{ url_for('logout') }}">Logout</a>
+                            <a href="{{ url_for('user', username=current_user.username) }}">Profile</a>
+                            <a href="{{ url_for('startNews') }}">News</a>
+                            <a href="{{ url_for('explore') }}">Explore</a>
+                            <form class="navbar-form navbar-right"
+                                            action="{{ url_for('search')}}" method="post">
+                                                    <div class="form-group">
+                                                        {{ g.search_form.hidden_tag()}}
+                                                        {{ g.search_form.q(size=70,placeholder="Search..", class='form-control') }}
+                                                        {{ g.search_form.submit}}
+                                                    </div>
+                            </form>
+                     {% endif %}
+            </div>
+         </nav>
+    {% endblock %}
+
+    {% block content %}
+              {% block index %}{% endblock %}
+              {% block user %}{% endblock %}
+              {% block edit_profile%}{% endblock %}
+              {% block error500%}{% endblock %}
+              {% block reset_password_request%}{% endblock %}
+              {% block reset_password%}{% endblock %}
+
+            <div id="login" class="login">
+                        {% block login %}{% endblock %}
+            </div>
+            <div id ="main_content" class="main_content">
+                        <div id="flash">
+                            {% with messages = get_flashed_messages() %}
+                             {% if messages %}
+                              <ul>
+                            {% for message in messages %}
+                            <li>{{ message }}</li>
+                            {% endfor %}
+                            </ul>
+                            {% endif %}
+                            {% endwith %}
+                        </div>
+            </div>
+            {% block app_content %}{% endblock %}
+{% block scripts %}
+    {{ super() }}
+    {{ moment.include_moment() }}
+{% endblock %}
+
+{% endblock %}
+
+

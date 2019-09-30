@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html>
+  <head>
+        {% if title %}
+              <title>{{ title }} - Myblog</title>
+        {% else %}
+              <title>Myblog</title>
+        {% endif %}
+              {% block index %}{% endblock %}
+              {% block user %}{% endblock %}
+              {% block edit_profile%}{% endblock %}
+              {% block error404%}{% endblock %}
+              {% block error500%}{% endblock %}
+              {% block reset_password_request%}{% endblock %}
+              {% block reset_password%}{% endblock %}
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel= "stylesheet" type= "text/css" href= "{{ url_for('static',filename='menu.css') }}">
+    <link rel= "stylesheet" type= "text/css" href= "{{ url_for('static',filename='header.css') }}">
+    <link rel= "stylesheet" type= "text/css" href= "{{ url_for('static',filename='main.css') }}">
+    <link rel= "stylesheet" type= "text/css" href= "{{ url_for('static',filename='footer.css') }}">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <style>
+             @media only screen and (max-width: 320px) {
+            /* Small screen, non-retina */
+            .b_img  {background-image: url("/static/brick-wall-290.183.jpg"); }
+                                                       }
+
+    .b_img  {
+            background-image: url('/static/brick-wall-bricks-brickwork-1101125.jpg');
+            display: inline-block;
+            width: 100%;
+            font-size: 0;
+            line-height: 0;
+            vertical-align: middle;
+            background-size: 100%;
+            background-position: 100% 30%;
+            background-repeat: no-repeat;
+      }
+      .b_img .inner {
+                padding-top: 63.35%; /* height/width of image */
+                display: block;
+                height: 0;
+      }
+    </style>
+  </head>
+  <body>
+   <div id="b_img"  class="b_img">
+         <span class="inner">   </span>
+   </div>
+   <div id="mySidenav" class="sidenav" >
+		  <!--<a href="javascript:void(0)" class="closebtn" onclick="openClose()">&times;</a>onmouseover="headerMenuHide(this,)" -->
+		  <a href="#">Home</a>
+		  <a href="#">Contact</a>
+		  <a href="#">About</a>
+   </div>
+
+<div id="main" class="menu">
+    <div id="header" class="header">
+                        <a id="xmenu" href="#" onclick="openClose()" class="logo">&#9776; </a>
+                        <div id="login" class="login">
+                              {% block login %}{% endblock %}
+                        </div>
+                         <div id="header-right" class="header-right">
+                              <a href="#home">Network</a>
+                              <a href="#home">Windows</a>
+                              <a href="#home">Linux</a>
+                              <a href="#home" id="idP">Python</a>
+                              <a href="#home">PowerShell</a>
+                              <a href="#home">Batch</a>
+                         </div>
+        </div>
+</div>
+
+
+<div id ="main_content" class="main_content">
+                <div id="flash">
+                    {% with messages = get_flashed_messages() %}
+                    {% if messages %}
+                    <ul>
+                        {% for message in messages %}
+                        <li>{{ message }}</li>
+                        {% endfor %}
+                    </ul>
+                    {% endif %}
+                    {% endwith %}
+                </div>
+
+            <div id="wall" class="wall">
+                            {% block news %}{% endblock %}
+            </div>
+            <div id="register">
+                            {% block register %}{% endblock %}
+            </div>
+            <div>Microblog:
+                        <a href="/index">Home</a>
+                        {% if current_user.is_anonymous %}
+                        <a href="{{ url_for('login') }}">Login</a>
+                        {% else %}
+                        <a href="{{ url_for('logout') }}">Logout</a>
+                        <a href="{{ url_for('user', username=current_user.username) }}">Profile</a>
+                        <a href="{{ url_for('startNews') }}">News</a>
+                        <a href="{{ url_for('explore') }}">Explore</a>
+                        {% endif %}
+            </div>
+
+</div>
+
+
+<footer class="footer">
+    <div class="social-area">
+        <ul>
+            <li> <a href="https://www.facebook.com" target="_blank" title="Join me on Facebook" class="shr-btn-instagram">
+            <img border="0" alt="facebook" src="{{url_for('static', filename='facebook_logo.png')}}" width="40" height="30" </a>
+            </li>
+            <li> <a href="http://instagram.com" target="_blank" title="Join me on Instagram" class="shr-btn-instagram">
+            <img border="0" alt="instagram" src="{{url_for('static', filename='Instagram-Button.png')}}" width="30" height="30">  </a>
+            </li>
+            <li> <a href="http://linkedin.com" target="_blank" title="Join me on LinkedIn" class="shr-btn-instagram">
+            <img border="0" alt="LinkedIn" src="{{url_for('static', filename='LinkedIn_logo.png')}}" width="30" height="30">  </a>
+            </li>
+        </ul>
+     </div>
+    <div class="credits">
+        <p>©2018 <span class="footer-white">Alex Lukyanov Web</span></p>
+    </div>
+</footer>
+
+
+</body>
+</html>
+
+<script>
+window.onscroll = function() {myFunction()};
+
+var navbar = document.getElementById("main");
+var sticky = navbar.offsetTop;
+
+function myFunction() {
+  if (window.pageYOffset >= sticky) {
+    navbar.classList.add("sticky")
+  } else {
+    navbar.classList.remove("sticky");
+
+  }
+}
+
+$(document).ready(function(){
+    $("#header-right > a").hover(function(){
+            var div =$(this);
+            var children=$('#header-right').children();
+             children.each(function(){
+                if ($(this).is(div)) {
+                    div.css( "font-size", "20px");
+                    return;
+                }else {
+                    $(this).css("opacity","0.6");
+                }
+             });
+   }, function(){
+         $("#header-right  > a").animate({opacity: '1',}, 0 );
+         $("#header-right  > a").css("font-size", "18px");
+   });
+});
+
+
+var is_open = 0;
+function openClose(){
+    if (is_open == 0) {
+        document.getElementById("xmenu").innerHTML ='&#10540';
+        document.getElementById("xmenu").style.fontSize = "42px";
+
+        openNav();
+    } else {
+        closeNav();
+        document.getElementById("xmenu").innerHTML ='&#9776';
+        document.getElementById("xmenu").style.fontSize = "40px";
+    }
+}
+
+var ov = 0;
+function  color(x){
+   if (ov == 0) {
+   x.style.backgroundColor = "#ffffa0";
+   ov = 1;
+   } else {
+     x.style.backgroundColor = "#111";
+     ov = 0;
+   }
+}
+function openNav() {
+    is_open = 1;
+    document.getElementById("mySidenav").style.width = "140px";
+    document.getElementById("main").style.marginLeft = "140px";
+    document.getElementById("header-right").style.marginRight = "140px";
+	/*document.body.style.backgroundColor = "rgba(0,0,0,0.4)";*/
+	document.getElementById("header-right").style.pointerEvents = "none";
+	document.getElementById("header-right").style.opacity = "0.3";
+	document.getElementById("login").style.pointerEvents = "none";
+	document.getElementById("login").style.opacity = "0";
+}
+
+function closeNav() {
+    is_open = 0;
+    document.getElementById("mySidenav").style.width = "0";
+    document.getElementById("main").style.marginLeft= "0";
+    document.getElementById("header-right").style.marginRight = "0";
+	document.body.style.backgroundColor = "#FBFCFC";
+	document.getElementById("header-right").style.pointerEvents = "auto";
+	document.getElementById("header-right").style.opacity = "1";
+	document.getElementById("login").style.pointerEvents = "auto";
+	document.getElementById("login").style.opacity = "1";
+
+
+}
+</script>
+  </body>
+</html>

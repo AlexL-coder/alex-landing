@@ -1,0 +1,166 @@
+
+.b_img {
+
+}
+.wall {
+
+}
+html, body {
+
+}
+h1, h2, h3, h4, h5, h6 {
+font-family: 'Open Sans', Helvetica, Arial, sans-serif;
+font-weight: 700;
+}
+
+hr {
+    height: 1px;
+  /*  color: #123455;
+    background-color: #123455;*/
+    color:  #D3D3D3;
+    background-color:#D3D3D3;
+    border: none;
+    width: 80%;
+    margin-left:0;
+}
+@media only screen and (max-width: 380px) {
+  .main_content .app_content h3{
+    font-size: 13px;
+  }
+  .main_content .app_content td {
+      font-size: 10px;
+  }
+  .main_content .app_content td img {
+      width: 128px;
+      height:128px;
+  }
+  .main_content .app_content td a {
+      font-size: 10px;
+  }
+  .main_content .app_content td  h2{
+      font-weight: bold;
+      font-size: 11px;
+  }
+  .main_content .app_content td  h1{
+      font-weight: bold;
+      font-size: 10px;
+  }
+  .main_content .app_content td em{
+      font-size: 10px;
+  }
+  .main_content .app_content{
+        width:100vw !important;
+        border-left:0px !important;
+        border-right:0px !important;
+  }
+  .main_content .left_content{
+         display: none !important;
+  }
+  .main_content .right_content{
+        display: none !important;
+  }
+}
+.main_content {
+    display: table;
+    top: 1vh;
+    left: 1vw;
+   /* max-width: 100vw;
+   */
+    overflow: auto;
+    background-color: white;
+    min-height: calc(100vh - 70px);
+
+}
+ /*padding-top: 30px;
+ width: 100%;  min-height: calc(100vh - 70px);*/
+
+
+.main_content .index {
+    z-index: 1;
+    background-color: white;
+}
+.main_content .left_content{
+    display: table-cell;
+    padding-top:1%;
+    width:20vw;
+    border-top: 3px solid black;
+    border-bottom: 3px solid black;
+}
+
+.main_content .app_content{
+    display: table-cell;
+    padding-left:2%;
+    padding-right:2%;
+    padding-top:1%;
+    padding-bottom:calc(44vh);
+    width:60vw;
+    border-bottom: 3px solid black;
+    border-top: 3px solid black;
+    border-width:3px;
+}
+.main_content .app_content h3 {
+    font-size: 30px;
+}
+
+.main_content .app_content td  h2{
+      font-weight: bold;
+      font-size: 25px;
+      font-style:Arial;
+      margin-top:0px;
+}
+.main_content .app_content td  h1{
+      font-weight: bold;
+      font-size: 18px;
+  }
+ .main_content .app_content td p{
+      font-size: 16px;
+
+  }
+ .main_content .app_content #user_info a{
+      font-size: 12px;
+      font-style:Arial;
+  }
+
+.main_content .app_content #user_info a:before {
+   font-family: FontAwesome;
+   content: "\f007";
+   display: inline-block;
+   padding-right: 3px;
+   vertical-align: middle;
+}
+
+.main_content .app_content #user_info span{
+      font-size: 12px;
+      font-style:Arial;
+  }
+
+.main_content .app_content #user_info span:before{
+      font-family: FontAwesome;
+   content: "\f017";
+   display: inline-block;
+   padding-right: 3px;
+   vertical-align: middle;
+  }
+.main_content .app_content hr {
+
+}
+
+.main_content .right_content{
+    display: table-cell;
+    padding-top:1%;
+    width:20vw;
+    border-top: 3px solid black;
+    border-bottom: 3px solid black;
+
+}
+
+:-webkit-any-link {
+
+}
+
+:-moz-any-link {
+}
+
+:any-link {
+   text-decoration: none;
+}

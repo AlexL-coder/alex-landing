@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+
+{% block login %}
+       <form action="" method="post" novalidate>
+        {{ form.hidden_tag() }}
+        <p>
+           <!-- {{ form.username.label }}<br>-->
+            {{ form.username(size=17,placeholder="Login") }}
+            {% for error in form.username.errors %}
+                 <span style="color: red;">[{{ error }}]</span>
+            {% endfor %}
+
+        </p>
+        <p>
+          <!--  {{ form.password.label }}<br>-->
+            {{ form.password(size=17,placeholder="Password") }}
+            {% for error in form.password.errors %}
+                 <span style="color: red;">[{{ error }}]</span>
+            {% endfor %}
+
+        </p>
+        <p>{{ form.submit() }}  {{ form.remember_me.label }} {{ form.remember_me() }}</p>
+    </form>
+        <p> <a href="{{ url_for('register') }}">Register</a></p>
+        <p> Forgot Your Password?
+        <a href="{{ url_for('reset_password_request') }}">Click to Reset It</a>
+    </p>
+
+
+{% endblock %}
